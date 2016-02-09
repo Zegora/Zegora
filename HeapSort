@@ -1,0 +1,71 @@
+template <typename T>
+void heapSortInPlace(T arr[], int n){
+	//1. Organisera innehållet till en heap
+	for (int i = 1; i < n; ++i){
+		int current = i;
+		bool sorted = false;
+		while (!sorted && current != 0){
+			if (arr[current] > arr[(current - 1) / 2]){
+				T temp = arr[current];
+				arr[current] = arr[(current - 1) / 2];
+				arr[(current - 1) / 2] = temp;
+				current = (current - 1) / 2;
+			}
+			else{
+				sorted = true;
+			}
+		}
+	}
+	
+	//2. Ta roten från heapen och placera sist tills hela heapen är "tömd"
+	int k = n;
+	for (int i = 0; i < n; ++i){
+		while (k >= 0){
+			T temp = arr[i];
+			arr[i] = arr[k];
+			arr[k] = temp;
+			bool sorted = false;
+			int currentPos = i;
+			int left = 2 * i + 1;
+			int right = 2 * i + 2;
+			while (!sorted){
+				if (right < n){
+					if (arr[currentPos] < arr[right] || arr[currentPos] < arr[left]){
+						if (arr[right] > arr[left]){
+							T temp = arr[right];
+							arr[right] = arr[currentPos];
+							arr[currentPos] = temp;
+							currentPos = right;
+						}
+						else{
+							T temp = arr[left];
+							arr[left] = arr[currentPos];
+							arr[currentPos] = temp;
+							currentPos = left;
+						}
+						right = 2 * currentPos + 1;
+						left = 2 * currentPos + 2;
+					}
+					else{
+						sorted = true;
+					}
+				}
+				else if (left < n){
+					if (arr[currentPos] < arr[left]){
+						T temp = arr[left];
+						arr[left] = arr[currentPos];
+						arr[currentPos] = temp;
+						sorted = true;
+					}
+					else{
+						sorted = true;
+					}
+				}
+				else{
+					sorted = true;
+				}
+			}
+			--k;
+		}
+	}
+}
