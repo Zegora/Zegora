@@ -19,7 +19,7 @@ void heapSortInPlace(T arr[], int n){
 	
 	
 	//2. Ta roten från heapen och placera sist tills hela heapen är "tömd"
-	int k = n;
+	int k = n - 1;
 	for (int i = 0; i < k; --k){
 		T temp = arr[i];
 		arr[i] = arr[k];
